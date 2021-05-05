@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "111170328716",
+    "project_id": "studentnetworking-d2d28",
+    "storage_bucket": "studentnetworking-d2d28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111170328716:android:002404812e2921d0b2c3a9",
+        "android_client_info": {
+          "package_name": "com.app.student.networking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111170328716-rn2gbir0s1g1s8am80lemq3dra7mhmlq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwsL2xoBAsJcgdAhIEXesa3kOTPcmjAFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111170328716-rn2gbir0s1g1s8am80lemq3dra7mhmlq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
