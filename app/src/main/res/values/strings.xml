@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">StudentNetworkingApp</string>
+    <string name="login_text">Connect anytime anywhere</string>
+    <string name="welcome_user">Welcome %1$s</string>
+    <string name="post_events">Post Events</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="sign_in">Sign In</string>
+
 </resources>
