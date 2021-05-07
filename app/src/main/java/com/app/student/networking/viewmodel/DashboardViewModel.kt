@@ -8,7 +8,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 
-
 class DashboardViewModel : ViewModel() {
 
     var announcementLiveData: MutableLiveData<List<AnnoucementData>> = MutableLiveData()
@@ -28,8 +27,6 @@ class DashboardViewModel : ViewModel() {
         fetchAnnouncementsFromDb()
     }
 
-
-
     private fun fetchAnnouncementsFromDb() {
         val db = FirebaseDatabase.getInstance()
         val ref = db.getReference("/announcements")
@@ -45,12 +42,6 @@ class DashboardViewModel : ViewModel() {
                         list.add(data)
                     }
                 }
-
-//                val list: List<AnnoucementData>
-//                val t: GenericTypeIndicator<List<AnnoucementData?>?> =
-//                    object : GenericTypeIndicator<List<AnnoucementData?>?>() {}
-//
-//                list = dataSnapshot.getValue(t) as List<AnnoucementData>
 
                 announcementLiveData.postValue(list)
             }

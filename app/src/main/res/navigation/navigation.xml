@@ -10,5 +10,9 @@
     <fragment
         android:id="@+id/postFragment"
         android:name="com.app.student.networking.fragments.PostFragment"
-        android:label="PostFragment" />
+        android:label="PostFragment" >
+        <action
+            android:id="@+id/action_postFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
 </navigation>
