@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.student.networking.model.AnnoucementData
-import com.app.student.networking.model.ResponseData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
@@ -38,11 +37,20 @@ class DashboardViewModel : ViewModel() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 Log.d(TAG, "onDataChange: ${dataSnapshot.childrenCount}")
 
-                val list : List<AnnoucementData>
-                val t: GenericTypeIndicator<List<AnnoucementData?>?> =
-                    object : GenericTypeIndicator<List<AnnoucementData?>?>() {}
+                val list : ArrayList<AnnoucementData> = ArrayList<AnnoucementData>()
 
-                list = dataSnapshot.getValue(t) as List<AnnoucementData>
+                for (valueRes in dataSnapshot.children) {
+                    val data = valueRes.getValue(AnnoucementData::class.java)
+                    if (data != null) {
+                        list.add(data)
+                    }
+                }
+
+//                val list: List<AnnoucementData>
+//                val t: GenericTypeIndicator<List<AnnoucementData?>?> =
+//                    object : GenericTypeIndicator<List<AnnoucementData?>?>() {}
+//
+//                list = dataSnapshot.getValue(t) as List<AnnoucementData>
 
                 announcementLiveData.postValue(list)
             }

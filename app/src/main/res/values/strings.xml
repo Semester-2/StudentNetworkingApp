@@ -13,5 +13,6 @@
     <string name="duration">Duration :</string>
     <string name="location">Location :</string>
     <string name="register">Register</string>
+    <string name="post">POST</string>
 
 </resources>
