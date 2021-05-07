@@ -13,6 +13,9 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.app.student.networking.model.AnnoucementData
 import com.bumptech.glide.Glide
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 const val SELECTED_ANNOUNCEMENT_DATA = "Selected Announcement"
 class AnnouncementScrollingActivity : AppCompatActivity() {
@@ -37,7 +40,7 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
         val dataItem: AnnoucementData? = intent.extras?.get(SELECTED_ANNOUNCEMENT_DATA) as? AnnoucementData
         if (dataItem != null) {
             titleTV.text = dataItem.topic
-            dateTimeTV.text = dataItem.dateTime
+            dateTimeTV.text = dataItem.dateTime?.let { convertToDate(it) }
             descriptionTV.text = dataItem.description
             //locationTV.text = dataItem.location
             locationTV.text = "Town hall"
@@ -54,6 +57,13 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
+    fun convertToDate(millis: Long): String? {
+        val simple: DateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z")
+        val result = Date(millis)
+        return simple.format(result)
+    }
+
 
 //    override fun onClick(view: View?) {
 //        val sendIntent: Intent = Intent().apply {

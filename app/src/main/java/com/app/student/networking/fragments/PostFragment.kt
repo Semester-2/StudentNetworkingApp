@@ -1,5 +1,6 @@
 package com.app.student.networking.fragments
 
+import android.app.DatePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.app.student.networking.databinding.FragmentPostBinding
 import com.app.student.networking.model.AnnoucementData
 import com.app.student.networking.utility.MyAlertDialog
 import com.app.student.networking.viewmodel.PostViewModel
+import java.util.*
 
 
 class PostFragment : Fragment(), View.OnClickListener {
@@ -22,6 +24,7 @@ class PostFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentPostBinding
     lateinit var viewModel : PostViewModel
     var alertDialog = MyAlertDialog()
+    lateinit var calendar : Calendar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +35,7 @@ class PostFragment : Fragment(), View.OnClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post, container, false)
         viewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         binding.postBtn.setOnClickListener(this)
+        binding.calendarIV.setOnClickListener(this)
 
         viewModel.response.observe(viewLifecycleOwner, Observer {
             alertDialog.dismissAlertDialog()
@@ -46,23 +50,63 @@ class PostFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         if (view != null) {
-            hideKeybaord(view)
-        }
-        alertDialog.showAlertDialog(requireActivity(),"Posting Announcement", "Please wait...")
-        val title = binding.titleEt.text.toString()
-        val desc = binding.despET.text.toString()
-        val dateTime = binding.dateTimeET.text.toString()
-        val location = binding.locationET.text.toString()
-        val url = "https://firebasestorage.googleapis.com/v0/b/studentnetworking-1edd4.appspot.com/o/btf_detail.jpg?alt=media&token=4dd8439d-e4ea-4606-8e39-ebc15af49a47"
-        //val imageurl
-        val data = AnnoucementData(title,desc,dateTime,"https://firebasestorage.googleapis.com/v0/b/studentnetworking-1edd4.appspot.com/o/btf_detail.jpg?alt=media&token=4dd8439d-e4ea-4606-8e39-ebc15af49a47")
+            if(view.id == R.id.postBtn) {
+                hideKeybaord(view)
+                alertDialog.showAlertDialog(requireActivity(), "Posting Announcement", "Please wait...")
+                val title = binding.titleEt.text.toString()
+                val desc = binding.despET.text.toString()
+                val dateTime = binding.dateTimeET.text.toString()
+                val location = binding.locationET.text.toString()
+                val url = "https://firebasestorage.googleapis.com/v0/b/studentnetworking-1edd4.appspot.com/o/btf_detail.jpg?alt=media&token=4dd8439d-e4ea-4606-8e39-ebc15af49a47"
+                val data = AnnoucementData(
+                    title,
+                    desc,
+                    viewModel.time,
+                    "https://firebasestorage.googleapis.com/v0/b/studentnetworking-1edd4.appspot.com/o/btf_detail.jpg?alt=media&token=4dd8439d-e4ea-4606-8e39-ebc15af49a47"
+                )
+                viewModel.postAnnouncement(data)
+            }
 
-        viewModel.postAnnouncement(data)
+            if(view.id ==R.id.calendarIV){
+                showStartDatePicker()
+            }
+        }
     }
 
     private fun hideKeybaord(v: View) {
         val inputMethodManager: InputMethodManager =
             requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(v.applicationWindowToken, 0)
+    }
+
+    private fun showStartDatePicker() {
+        calendar = Calendar.getInstance()
+        val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+        val month: Int = calendar.get(Calendar.MONTH)
+        val year: Int = calendar.get(Calendar.YEAR)
+        val maxDate: Long = calendar.getTimeInMillis()
+
+        val mDate: Date = calendar.getTime()
+        val minDate = mDate.time
+        val picker = DatePickerDialog(
+            requireActivity(),
+            { view, year, month, dayOfMonth ->
+                val selectedDate = dayOfMonth.toString() + "/" + (month + 1) + "/" + year
+                binding.dateTimeET.setText(selectedDate)
+                val millis: Long = convertDateToTimeInMillis(year, month + 1, dayOfMonth)
+                viewModel.time = millis
+            }, year, month, day
+        )
+//        picker.datePicker.maxDate = maxDate
+//        picker.datePicker.minDate = minDate
+        picker.show()
+    }
+
+    private fun convertDateToTimeInMillis(year: Int, month: Int, dayOfMonth: Int): Long {
+        val cal = Calendar.getInstance()
+        cal[Calendar.DAY_OF_MONTH] = dayOfMonth
+        cal[Calendar.MONTH] = month - 1
+        cal[Calendar.YEAR] = year
+        return cal.timeInMillis
     }
 }

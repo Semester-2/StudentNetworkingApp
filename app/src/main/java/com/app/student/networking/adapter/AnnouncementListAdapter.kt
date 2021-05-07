@@ -13,10 +13,11 @@ import com.app.student.networking.R
 import com.app.student.networking.SELECTED_ANNOUNCEMENT_DATA
 import com.app.student.networking.model.AnnoucementData
 import com.bumptech.glide.Glide
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 import java.io.Serializable
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AnnouncementListAdapter  :
     RecyclerView.Adapter<AnnouncementListAdapter.CardHolder>(){
@@ -53,7 +54,6 @@ class AnnouncementListAdapter  :
             }
         }
     }
-
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): CardHolder {
         val view = LayoutInflater.from(viewGroup.context)
