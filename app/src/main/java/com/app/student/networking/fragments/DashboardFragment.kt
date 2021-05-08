@@ -39,7 +39,7 @@ class DashboardFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = String.format(getString(R.string.welcome_user), currentUser.displayName)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Dashboard"
 
         viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
@@ -49,6 +49,7 @@ class DashboardFragment : Fragment() {
             "Loading... Please wait"
         ) }
 
+        //viewModel.fetchToken()
         adapter = AnnouncementListAdapter()
         val recyclerView: RecyclerView = binding.annoucementRV
         recyclerView.layoutManager = LinearLayoutManager(activity)

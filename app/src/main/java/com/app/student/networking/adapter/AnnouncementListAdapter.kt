@@ -12,38 +12,33 @@ import com.app.student.networking.AnnouncementScrollingActivity
 import com.app.student.networking.R
 import com.app.student.networking.SELECTED_ANNOUNCEMENT_DATA
 import com.app.student.networking.model.AnnoucementData
+import com.app.student.networking.model.ResponseData
 import com.bumptech.glide.Glide
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import java.io.Serializable
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class AnnouncementListAdapter  :
     RecyclerView.Adapter<AnnouncementListAdapter.CardHolder>(){
 
-    private var list:List<AnnoucementData> = ArrayList<AnnoucementData>()
+    private var list:List<ResponseData> = ArrayList<ResponseData>()
 
     class CardHolder(private val view: View): RecyclerView.ViewHolder(view){
         val newsText : TextView = view.findViewById(R.id.headingTV)
         private val newsImage : ImageView = view.findViewById(R.id.headingIV)
         private val card : CardView = view.findViewById(R.id.card)
         val context = view.context
-        fun bind(oneItem: AnnoucementData) {
-            newsText.text = oneItem.topic
-            val url = oneItem.image
+        fun bind(oneItem: ResponseData) {
+            var list = oneItem.announcements
+            newsText.text = list.topic
+            val url = list.image
 
-//            val storageReference = Firebase.storage.reference
-//            if (url != null) {
-//                val reference = Firebase.storage.getReferenceFromUrl(url)
-//
-//            }
             Glide
                 .with(context)
                 .load(url)
                 .centerCrop()
                 .into(newsImage)
-
 
             card.setOnClickListener {
 
@@ -70,7 +65,7 @@ class AnnouncementListAdapter  :
         holder.bind(list[position])
     }
 
-    fun updateList(list: List<AnnoucementData>){
+    fun updateList(list: List<ResponseData>){
         this.list = list
     }
 }

@@ -29,13 +29,20 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
             when(authenticationState){
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     Log.d(TAG, "AUTHENTICATED")
-                    val intent = Intent(this, MainActivity::class.java )
-                    startActivity(intent)
-                    finish()
+                    loginViewModel.fetchToken()
+
                 }
                 else -> {
                     Log.d(TAG, "UNAUTHENTICATED")
                 }
+            }
+        })
+
+        loginViewModel.response.observe(this, Observer { response ->
+            if(response){
+                val intent = Intent(this, MainActivity::class.java )
+                startActivity(intent)
+                finish()
             }
         })
     }
