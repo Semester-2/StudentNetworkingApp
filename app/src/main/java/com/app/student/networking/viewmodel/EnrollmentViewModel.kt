@@ -5,17 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.student.networking.model.AnnoucementData
 import com.app.student.networking.model.ResponseData
-import com.app.student.networking.model.User
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
-class DashboardViewModel : ViewModel() {
+class EnrollmentViewModel : ViewModel() {
 
-    var announcementLiveData: MutableLiveData<List<ResponseData>> = MutableLiveData()
+    var enrollmentLiveData: MutableLiveData<List<ResponseData>> = MutableLiveData()
 
     init{
         fetchAnnouncementsFromDb()
@@ -39,7 +36,7 @@ class DashboardViewModel : ViewModel() {
                     }
                 }
 
-                announcementLiveData.postValue(list)
+                enrollmentLiveData.postValue(list)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -49,6 +46,6 @@ class DashboardViewModel : ViewModel() {
     }
 
     companion object{
-        private const val TAG = "DashboardViewModel"
+        private const val TAG = "EnrollmentViewModel"
     }
 }

@@ -2,5 +2,11 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/post_events" />
+    <item
+        android:id="@+id/postFragment"
+        android:title="@string/post_events" />
+    <item android:title="@string/academics" />
+    <item android:title="@string/extracurricular" />
+    <item android:title="@string/your_enrollments" />
+    <item android:title="@string/contacts" />
 </menu>

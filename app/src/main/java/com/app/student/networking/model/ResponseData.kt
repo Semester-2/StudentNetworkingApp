@@ -1,3 +1,5 @@
 package com.app.student.networking.model
 
-data class ResponseData(var status:String?, var announcements : List<AnnoucementData>)
+import java.io.Serializable
+
+data class ResponseData(var key:String?, var announcements : AnnoucementData) : Serializable

@@ -13,5 +13,10 @@
     <string name="duration">Duration :</string>
     <string name="location">Location :</string>
     <string name="register">Register</string>
+    <string name="post">POST</string>
+    <string name="extracurricular">Extracurricular</string>
+    <string name="academics">Academics</string>
+    <string name="contacts">Contacts</string>
+    <string name="your_enrollments">Your Enrollments</string>
 
 </resources>

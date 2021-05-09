@@ -1,59 +1,46 @@
 package com.app.student.networking.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.app.student.networking.AnnouncementScrollingActivity
 import com.app.student.networking.R
-import com.app.student.networking.SELECTED_ANNOUNCEMENT_DATA
-import com.app.student.networking.model.AnnoucementData
 import com.app.student.networking.model.ResponseData
-import com.bumptech.glide.Glide
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
-import java.io.Serializable
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class AnnouncementListAdapter  :
-    RecyclerView.Adapter<AnnouncementListAdapter.CardHolder>(){
+class EnrollmentAdapter : RecyclerView.Adapter<EnrollmentAdapter.CardHolder>(){
 
     private var list:List<ResponseData> = ArrayList<ResponseData>()
 
     class CardHolder(private val view: View): RecyclerView.ViewHolder(view){
         val newsText : TextView = view.findViewById(R.id.headingTV)
-        private val newsImage : ImageView = view.findViewById(R.id.headingIV)
+        val dateText : TextView = view.findViewById(R.id.dateTV)
+        val locText : TextView = view.findViewById(R.id.locTV)
+        val registerBtn : TextView = view.findViewById(R.id.regTV)
+
         private val card : CardView = view.findViewById(R.id.card)
         val context = view.context
         fun bind(oneItem: ResponseData) {
             var list = oneItem.announcements
             newsText.text = list.topic
-            val url = list.image
-
-            Glide
-                .with(context)
-                .load(url)
-                .centerCrop()
-                .into(newsImage)
-
-
-            card.setOnClickListener {
-
-                val intent = Intent(context, AnnouncementScrollingActivity::class.java).apply {
-                    putExtra(SELECTED_ANNOUNCEMENT_DATA, oneItem as Serializable)
-                }
-                context.startActivity(intent)
-            }
+            dateText.text = list.dateTime?.let { convertToDate(it) }
+            //locText.text = list.location
+        }
+        fun convertToDate(millis: Long): String? {
+            val simple: DateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z")
+            val result = Date(millis)
+            return simple.format(result)
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): CardHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.announcement_item_view, viewGroup, false)
+            .inflate(R.layout.enrollment_list_view_item, viewGroup, false)
 
         return CardHolder(view)
     }
