@@ -24,11 +24,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity" android:parentActivityName=".WelcomeActivity"/>
         <activity android:name=".RegisterActivity"
-            android:parentActivityName=".LoginActivity"/>
+            android:parentActivityName=".WelcomeActivity"/>
         <activity android:name=".ChatMainActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".MessageChatActivity"/>
+        <activity android:name=".WelcomeActivity"/>
 
 
         <service

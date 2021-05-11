@@ -25,8 +25,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         findViewById<Button>(R.id.loginBtn).setOnClickListener(this)
-        findViewById<Button>(R.id.login_btn).setOnClickListener{loginUser()}
-        findViewById<Button>(R.id.register_welcome_btn).setOnClickListener{launchRegister()}
+        findViewById<Button>(R.id.wc_login_btn).setOnClickListener{loginUser()}
 
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
@@ -46,15 +45,11 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         loginViewModel.response.observe(this, Observer { response ->
             if(response){
                 val intent = Intent(this, MainActivity::class.java )
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and  Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
             }
         })
-    }
-
-    fun launchRegister(){
-        val intent = Intent(this, RegisterActivity::class.java)
-        startActivity(intent)
     }
 
     override fun onClick(view: View?) {

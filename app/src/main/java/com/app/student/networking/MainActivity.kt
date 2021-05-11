@@ -68,7 +68,8 @@ class MainActivity : AppCompatActivity() {
         if(item.itemId == R.id.signOutItem){
             AuthUI.getInstance().signOut(this).addOnCompleteListener {
                     Log.i(TAG, "Sign out successful")
-                    val intent = Intent(this,LoginActivity::class.java)
+                    val intent = Intent(this,WelcomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 finish()
                 }

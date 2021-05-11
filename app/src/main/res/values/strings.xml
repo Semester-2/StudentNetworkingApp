@@ -20,5 +20,8 @@
     <string name="your_enrollments">Your Enrollments</string>
     <string name="unregister">UNREGISTER</string>
     <string name="no_enrollments">You have no enrollments</string>
+    <string name="enter_email">Enter Email Address</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_username">Enter Username</string>
 
 </resources>
