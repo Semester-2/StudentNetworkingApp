@@ -1,5 +1,6 @@
 package com.app.student.networking.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,7 +47,14 @@ class LoginViewModel : ViewModel() {
         val fbUser = FirebaseAuth.getInstance().currentUser
 
         val db = Firebase.database.reference
-        var user = User(fbUser.displayName,fbUser.email,fbUser.photoUrl.toString(),fbUser.phoneNumber,token)
+
+        var url : String=""
+        if(fbUser.photoUrl != null) {
+            url = fbUser.photoUrl.toString()
+        }
+
+
+        var user = User(fbUser.displayName,fbUser.email,url,fbUser.phoneNumber,token)
 
         db.child("users").child(fbUser.uid).setValue(user)
 
