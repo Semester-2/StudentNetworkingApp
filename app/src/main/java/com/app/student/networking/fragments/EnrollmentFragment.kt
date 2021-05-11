@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.app.student.networking.MyCallback
 import com.app.student.networking.R
 import com.app.student.networking.adapter.AnnouncementListAdapter
 import com.app.student.networking.adapter.EnrollmentAdapter
@@ -21,7 +22,7 @@ import com.app.student.networking.viewmodel.DashboardViewModel
 import com.app.student.networking.viewmodel.EnrollmentViewModel
 import com.google.firebase.auth.FirebaseAuth
 
-class EnrollmentFragment : Fragment() {
+class EnrollmentFragment : Fragment(), MyCallback {
 
     lateinit var binding : FragmentDashboardBinding
     lateinit var viewModel : EnrollmentViewModel
@@ -41,7 +42,7 @@ class EnrollmentFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false)
 
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Enrollments"
-
+        binding.emptyListTV.visibility = View.GONE
         viewModel = ViewModelProvider(this).get(EnrollmentViewModel::class.java)
 
         activity?.let { newsAlertDialog.showAlertDialog(
@@ -50,7 +51,7 @@ class EnrollmentFragment : Fragment() {
             "Loading... Please wait"
         ) }
 
-        adapter = EnrollmentAdapter()
+        adapter = EnrollmentAdapter(this)
         val recyclerView: RecyclerView = binding.annoucementRV
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
@@ -58,10 +59,20 @@ class EnrollmentFragment : Fragment() {
         viewModel.enrollmentLiveData.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, "Headlines Count: $it")
             newsAlertDialog.dismissAlertDialog()
-            adapter.updateList(it)
-            adapter.notifyDataSetChanged()
+            if(it != null) {
+                binding.emptyListTV.visibility = View.GONE
+                adapter.updateList(it)
+                adapter.notifyDataSetChanged()
+            }else{
+                binding.emptyListTV.visibility = View.VISIBLE
+            }
         })
 
         return binding.root
+    }
+
+    override fun onClickUnregister(id : String) {
+        Log.d(TAG, "onClickUnregister")
+        viewModel.deleteEnrolledActivity(id)
     }
 }

@@ -50,9 +50,6 @@ class MyFirebaseMessaging: FirebaseMessagingService()
             }
 
         }
-
-
-
     }
 
     private fun sendNotification(mRemoteMessage: RemoteMessage)

@@ -18,5 +18,7 @@
     <string name="academics">Academics</string>
     <string name="contacts">Contacts</string>
     <string name="your_enrollments">Your Enrollments</string>
+    <string name="unregister">UNREGISTER</string>
+    <string name="no_enrollments">You have no enrollments</string>
 
 </resources>
