@@ -5,15 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.app.student.networking.MyCallback
 import com.app.student.networking.R
+import com.app.student.networking.fragments.EnrollmentFragment
 import com.app.student.networking.model.ResponseData
+import com.app.student.networking.viewmodel.EnrollmentViewModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EnrollmentAdapter : RecyclerView.Adapter<EnrollmentAdapter.CardHolder>(){
+class EnrollmentAdapter(var listener : MyCallback) : RecyclerView.Adapter<EnrollmentAdapter.CardHolder>(){
 
     private var list:List<ResponseData> = ArrayList<ResponseData>()
 
@@ -25,11 +29,14 @@ class EnrollmentAdapter : RecyclerView.Adapter<EnrollmentAdapter.CardHolder>(){
 
         private val card : CardView = view.findViewById(R.id.card)
         val context = view.context
-        fun bind(oneItem: ResponseData) {
+        fun bind(oneItem: ResponseData, listener: MyCallback) {
             var list = oneItem.announcements
             newsText.text = list.topic
             dateText.text = list.dateTime?.let { convertToDate(it) }
-            //locText.text = list.location
+            registerBtn.setOnClickListener{
+                oneItem.key?.let { it1 -> listener.onClickUnregister(it1) }
+            }
+            locText.text = list.location
         }
         fun convertToDate(millis: Long): String? {
             val simple: DateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z")
@@ -50,7 +57,7 @@ class EnrollmentAdapter : RecyclerView.Adapter<EnrollmentAdapter.CardHolder>(){
     }
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position],listener)
     }
 
     fun updateList(list: List<ResponseData>){

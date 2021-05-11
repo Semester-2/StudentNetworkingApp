@@ -52,8 +52,8 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
             titleTV.text = list.topic
             dateTimeTV.text = list.dateTime?.let { convertToDate(it) }
             descriptionTV.text = list.description
-            //locationTV.text = dataItem.location
-            locationTV.text = "Town hall"
+            locationTV.text = list.location
+
             key = dataItem.key.toString()
             val url = list.image
 
