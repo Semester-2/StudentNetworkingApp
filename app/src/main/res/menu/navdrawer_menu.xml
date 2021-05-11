@@ -9,4 +9,5 @@
     <item android:title="@string/extracurricular" />
     <item android:title="@string/your_enrollments" />
     <item android:title="@string/contacts" />
+    <item android:title="Chat" />
 </menu>

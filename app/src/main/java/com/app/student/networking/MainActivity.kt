@@ -45,6 +45,13 @@ class MainActivity : AppCompatActivity() {
             .load(user.photoUrl)
             .centerCrop()
             .into(avatar)
+
+        headerView.chatBtn.setOnClickListener{handleChat()}
+    }
+
+    fun handleChat(){
+        var intent = Intent(this, ChatMainActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {
