@@ -31,14 +31,8 @@ class ChatMainActivity: AppCompatActivity() {
 
         setContentView(R.layout.main_chat_activity)
 
-//        setSupportActionBar(findViewById(R.id.toolbar_main))
-
         firebaseUser = FirebaseAuth.getInstance().currentUser
         refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
-
-//        val toolbar: Toolbar = findViewById(R.id.toolbar_main)
-//        setSupportActionBar(toolbar)
-//        supportActionBar!!.title = ""
 
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
@@ -46,9 +40,17 @@ class ChatMainActivity: AppCompatActivity() {
 
         val ref = FirebaseDatabase.getInstance().reference.child("Chats")
 
+        viewPagerAdapter.addFragment(ChatsFragment(), title = "Chats")
+        viewPagerAdapter.addFragment(SearchFragment(), title = "Search")
+        viewPagerAdapter.addFragment(SettingsFragment(), title = "Settings")
+
+        viewPager.adapter = viewPagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
+
         ref!!.addValueEventListener(object : ValueEventListener {
+
             override fun onDataChange(p0: DataSnapshot) {
-                val ViewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
+
                 var countUnreadMessages = 0
 
                 for (dataSnapshot in p0.children) {
@@ -60,29 +62,17 @@ class ChatMainActivity: AppCompatActivity() {
                 }
 
                 if (countUnreadMessages == 0) {
-                    viewPagerAdapter.addFragment(ChatsFragment(), title = "Chats")
+                    viewPagerAdapter.updateTitle("Chats")
 
-                } else {
-                    viewPagerAdapter.addFragment(
-                        ChatsFragment(),
-                        title = "($countUnreadMessages) Chats"
-                    )
-                }
-
-                viewPagerAdapter.addFragment(SearchFragment(), title = "Search")
-                viewPagerAdapter.addFragment(SettingsFragment(), title = "Settings")
-
-                viewPager.adapter = viewPagerAdapter
-                tabLayout.setupWithViewPager(viewPager)
+                }else
+                    viewPagerAdapter.updateTitle("($countUnreadMessages) Chats")
 
             }
 
             override fun onCancelled(p0: DatabaseError) {
 
             }
-
         })
-
 
         //Display the username and profile picture
         refUsers!!.addValueEventListener(object : ValueEventListener {
@@ -127,16 +117,10 @@ class ChatMainActivity: AppCompatActivity() {
 
     }
 
-
     internal class ViewPagerAdapter(fragmentManager: FragmentManager) :
         FragmentPagerAdapter(fragmentManager) {
-        private val fragments: ArrayList<Fragment>
-        private val titles: ArrayList<String>
-
-        init {
-            fragments = ArrayList<Fragment>()
-            titles = ArrayList<String>()
-        }
+        private val fragments: ArrayList<Fragment> = ArrayList<Fragment>()
+        private val titles: ArrayList<String> = ArrayList<String>()
 
         override fun getItem(position: Int): Fragment {
             return fragments[position]
@@ -151,10 +135,14 @@ class ChatMainActivity: AppCompatActivity() {
             titles.add(title)
         }
 
+        fun updateTitle(title: String) {
+            titles[0] = title
+            notifyDataSetChanged()
+        }
+
         override fun getPageTitle(i: Int): CharSequence? {
             return titles[i]
         }
-
     }
 }
 
