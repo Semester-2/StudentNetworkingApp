@@ -75,24 +75,24 @@ class ChatMainActivity: AppCompatActivity() {
         })
 
         //Display the username and profile picture
-        refUsers!!.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-
-                    val user: Users? = snapshot.getValue(Users::class.java)
-
-                    username_main.text = user!!.getUserName()
-                    Picasso.get().load(user.getProfile())
-                        .placeholder(R.drawable.profile)
-                        .into(profile_image)
-
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
+//        refUsers!!.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//
+//                    val user: Users? = snapshot.getValue(Users::class.java)
+//
+//                    username_main.text = user!!.getUserName()
+//                    Picasso.get().load(user.getProfile())
+//                        .placeholder(R.drawable.profile)
+//                        .into(profile_image)
+//
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
