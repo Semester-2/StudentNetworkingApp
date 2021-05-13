@@ -16,7 +16,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var refUsers: DatabaseReference
     private var firebaseUserID: String = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -26,7 +25,6 @@ class RegisterActivity : AppCompatActivity() {
         register_btn.setOnClickListener {
             registerUser()
         }
-
     }
 
     private fun registerUser() {
@@ -38,7 +36,6 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this@RegisterActivity, "Please enter your Username.", Toast.LENGTH_LONG).show()
         } else if (email == "") {
             Toast.makeText(this@RegisterActivity, "Please enter your Email ID.", Toast.LENGTH_LONG).show()
-
         } else if (password == "") {
             Toast.makeText(this@RegisterActivity, "Please enter your Password.", Toast.LENGTH_LONG).show()
         } else {

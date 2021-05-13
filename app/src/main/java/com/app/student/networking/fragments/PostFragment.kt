@@ -20,6 +20,7 @@ import com.app.student.networking.databinding.FragmentPostBinding
 import com.app.student.networking.model.AnnoucementData
 import com.app.student.networking.utility.MyAlertDialog
 import com.app.student.networking.viewmodel.PostViewModel
+import com.google.firebase.auth.FirebaseAuth
 import java.io.File
 import java.util.*
 
@@ -65,16 +66,19 @@ class PostFragment : Fragment(), View.OnClickListener {
         if (view != null) {
             hideKeybaord(view)
             alertDialog.showAlertDialog(requireActivity(), "Posting Announcement", "Please wait...")
+            var user = FirebaseAuth.getInstance().currentUser
             val title = binding.titleEt.text.toString()
             val desc = binding.despET.text.toString()
             val dateTime = binding.dateTimeET.text.toString()
             val location = binding.locationET.text.toString()
             val url = "https://firebasestorage.googleapis.com/v0/b/studentnetworking-1edd4.appspot.com/o/btf_detail.jpg?alt=media&token=4dd8439d-e4ea-4606-8e39-ebc15af49a47"
             val data = AnnoucementData(
-                title,
-                desc,
-                viewModel.time,
-                viewModel.uri.toString()
+                    title,
+                    desc,
+                    viewModel.time,
+                    viewModel.uri.toString(),
+                    location,
+                    user.displayName
             )
             viewModel.postAnnouncement(data)
         }

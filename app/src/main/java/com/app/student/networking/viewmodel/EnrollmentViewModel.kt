@@ -7,12 +7,9 @@ import com.app.student.networking.model.AnnoucementData
 import com.app.student.networking.model.ResponseData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
-class EnrollmentViewModel : ViewModel() {
+class EnrollmentViewModel : ViewModel(),ChildEventListener {
 
     var enrollmentLiveData: MutableLiveData<List<ResponseData>> = MutableLiveData()
 
@@ -76,10 +73,30 @@ class EnrollmentViewModel : ViewModel() {
         val user = FirebaseAuth.getInstance().currentUser
 
         val ref = db.getReference("users").child(user.uid).child("activities").child(id)
+        val ref1 = db.getReference("announcements").child(id).child("enrollments").child(user.displayName)
         ref.removeValue()
+        ref1.removeValue()
+
+        ref.addChildEventListener(this)
     }
 
     companion object{
         private const val TAG = "EnrollmentViewModel"
+    }
+
+    override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+    }
+
+    override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+    }
+
+    override fun onChildRemoved(snapshot: DataSnapshot) {
+        Log.d(TAG, "onChildRemoved")
+    }
+
+    override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+    }
+
+    override fun onCancelled(error: DatabaseError) {
     }
 }

@@ -53,7 +53,9 @@ class EnrollmentAdapter(var listener : MyCallback) : RecyclerView.Adapter<Enroll
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        if(list != null)
+            return list.size
+        else return 0
     }
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {

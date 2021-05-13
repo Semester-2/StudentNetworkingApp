@@ -23,5 +23,6 @@
     <string name="enter_email">Enter Email Address</string>
     <string name="enter_password">Enter Password</string>
     <string name="enter_username">Enter Username</string>
+    <string name="published_by">Published By:</string>
 
 </resources>

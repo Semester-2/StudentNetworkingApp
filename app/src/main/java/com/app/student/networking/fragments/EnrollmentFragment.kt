@@ -59,15 +59,16 @@ class EnrollmentFragment : Fragment(), MyCallback {
         viewModel.enrollmentLiveData.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, "Headlines Count: $it")
             newsAlertDialog.dismissAlertDialog()
-            if(it != null) {
+            if(it != null && it[0].announcements.enrollments != null) {
                 binding.emptyListTV.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
                 adapter.updateList(it)
                 adapter.notifyDataSetChanged()
             }else{
+                recyclerView.visibility = View.INVISIBLE
                 binding.emptyListTV.visibility = View.VISIBLE
             }
         })
-
         return binding.root
     }
 

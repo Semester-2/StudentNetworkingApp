@@ -1,10 +1,12 @@
 package com.app.student.networking.viewmodel
 
-import android.net.Uri
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import com.app.student.networking.fragments.model.Chat
 import com.app.student.networking.model.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -14,6 +16,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+
 
 class LoginViewModel : ViewModel() {
     var response : MutableLiveData<Boolean> = MutableLiveData()
@@ -37,38 +40,53 @@ class LoginViewModel : ViewModel() {
                     var token = task.result
                     Log.d("FirebaseMessaging", "Firebase Token: $token")
                     if (token != null) {
-                        updateUserOnServer(token)
+                        checkIfUserExists(token)
                     }
                 }
             })
     }
 
-    fun updateUserOnServer(token : String){
+    fun checkIfUserExists(token:String){
         val fbUser = FirebaseAuth.getInstance().currentUser
-
         val db = Firebase.database.reference
 
+        db.child("users").child(fbUser.uid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    updateUserOnServer(token)
+                } else {
+                    updateTokenOnServer(token)
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+
+    }
+
+    fun updateUserOnServer(token: String){
+        val fbUser = FirebaseAuth.getInstance().currentUser
+        val db = Firebase.database.reference
         var url : String=""
         if(fbUser.photoUrl != null) {
             url = fbUser.photoUrl.toString()
         }
-
-
-        var user = User(fbUser.displayName,fbUser.email,url,fbUser.phoneNumber,token)
-
+        var user = User(fbUser.displayName, fbUser.email, url, fbUser.phoneNumber, token)
         db.child("users").child(fbUser.uid).setValue(user)
-
         db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 Log.d("LoginViewModel", "updateUserOnServer: ${dataSnapshot.childrenCount}")
                 response.postValue(true)
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.d("LoginViewModel", "updateUserOnServer: ${databaseError.code}")
                 response.postValue(false)
             }
         })
+    }
+
+    fun updateTokenOnServer(token: String){
+        response.postValue(true)
     }
 
     fun getUserInfo(): String {
@@ -84,8 +102,8 @@ class LoginViewModel : ViewModel() {
         val userinfo = "Username: ${name} \n ${email} "
 
         Log.i(
-            "MainActivity",
-            "LoginViewModel User info, name: ${name}; email: ${email} ${emailVerified}; photoUrl: ${photoUrl}; uid:${uid} ."
+                "MainActivity",
+                "LoginViewModel User info, name: ${name}; email: ${email} ${emailVerified}; photoUrl: ${photoUrl}; uid:${uid} ."
         )
         return userinfo
     }

@@ -1,5 +1,6 @@
 package com.app.student.networking
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -7,12 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.app.student.networking.model.ResponseData
-import com.app.student.networking.utility.MyAlertDialog
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.DateFormat
@@ -21,47 +22,56 @@ import java.util.*
 
 const val SELECTED_ANNOUNCEMENT_DATA = "Selected Announcement"
 class AnnouncementScrollingActivity : AppCompatActivity() {
-
-
-    lateinit var key : String
-    var alertDialog = MyAlertDialog()
-    lateinit var registerBtn:Button
+    lateinit var key: String
+    lateinit var registerBtn: Button
+    private lateinit var dataItem: ResponseData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_announcement_scrolling)
 
         val titleTV = findViewById<TextView>(R.id.titleTV)
         val dateTimeTV = findViewById<TextView>(R.id.dateTimeTV)
         val descriptionTV = findViewById<TextView>(R.id.descriptionTV)
         val locationTV = findViewById<TextView>(R.id.locationTV)
+        val publishedByTV = findViewById<TextView>(R.id.publishedBYTV)
         registerBtn = findViewById<Button>(R.id.registerBtn)
-        registerBtn.setOnClickListener{registerForEvent()}
+        registerBtn.setOnClickListener { registerForEvent() }
 
         val collapsingImageView = findViewById<ImageView>(R.id.collapsingToolbarHeaderImage)
         val fab = findViewById<FloatingActionButton>(R.id.fab)
-        //fab.setOnClickListener(this)
-
+        fab.setOnClickListener { handleFab() }
         val toolbarLayout: CollapsingToolbarLayout =
-            findViewById<CollapsingToolbarLayout>(R.id.toolbarLayout)
+                findViewById<CollapsingToolbarLayout>(R.id.toolbarLayout)
 
-        val dataItem: ResponseData? = intent.extras?.get(SELECTED_ANNOUNCEMENT_DATA) as? ResponseData
+        dataItem = (intent.extras?.get(SELECTED_ANNOUNCEMENT_DATA) as? ResponseData)!!
         if (dataItem != null) {
+            var user = FirebaseAuth.getInstance().currentUser
             var list = dataItem.announcements
             titleTV.text = list.topic
             dateTimeTV.text = list.dateTime?.let { convertToDate(it) }
             descriptionTV.text = list.description
             locationTV.text = list.location
+            publishedByTV.text = list.publishedBy
+
+            var map = list.enrollments
+            if (map != null) {
+                for ((k, v) in map) {
+                    println("$k = $v")
+                    if(k == user.displayName && v){
+                        registerBtn.text = "Unregister"
+                    }
+                }
+            }
 
             key = dataItem.key.toString()
             val url = list.image
 
             Glide
-                .with(this)
-                .load(url)
-                .centerCrop()
-                .into(collapsingImageView);
+                    .with(this)
+                    .load(url)
+                    .centerCrop()
+                    .into(collapsingImageView);
             toolbarLayout.title = "News Detail"
         }
 
@@ -69,62 +79,56 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun convertToDate(millis: Long): String? {
-        val simple: DateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z")
-        val result = Date(millis)
-        return simple.format(result)
-    }
-
-    fun registerForEvent(){
+    fun registerForEvent() {
         val db = Firebase.database.reference
         val user = FirebaseAuth.getInstance().currentUser
         lateinit var task: Task<Void>
-        if(registerBtn.text == "Register"){
-            alertDialog.showAlertDialog(this, "Registering", "Please wait...")
-            val map: MutableMap<String, Any> = HashMap()
-            map[key] = "true"
+        if (registerBtn.text == "Register") {
             task = db.child("users").child(user.uid).child("activities").child(key).setValue(true)
             task.addOnSuccessListener {
-                alertDialog.dismissAlertDialog()
                 registerBtn.text = "Unregister"
                 Log.d(TAG, "addOnSuccessListener: $it")
+                announcementRegister()
             }
-            task.addOnFailureListener{
-                alertDialog.dismissAlertDialog()
+            task.addOnFailureListener {
                 Log.d(TAG, "addOnFailureListener")
             }
-        }
-        else if(registerBtn.text == "Unregister"){
-            alertDialog.showAlertDialog(this, "Unregistering", "Please wait...")
 
-            val map: MutableMap<String, Any> = HashMap()
-            map[key] = "false"
-            task = db.child("users").child(user.uid).child("activities").updateChildren(map)
-            task.addOnSuccessListener {
-                alertDialog.dismissAlertDialog()
-                registerBtn.text = "Register"
-                Log.d(TAG, "addOnSuccessListener: $it")
-            }
-            task.addOnFailureListener{
-                alertDialog.dismissAlertDialog()
-                Log.d(TAG, "addOnFailureListener")
-            }
+        } else if (registerBtn.text == "Unregister") {
+
+            val ref = FirebaseDatabase.getInstance().getReference("users").child(user.uid).child("activities").child(key)
+            ref.removeValue()
+            val ref1 = FirebaseDatabase.getInstance().getReference("announcements").child(key).child("enrollments").child(user.displayName)
+            ref1.removeValue()
+            registerBtn.text = "Register"
         }
+    }
+
+    fun announcementRegister(){
+        val db = Firebase.database.reference
+        val user = FirebaseAuth.getInstance().currentUser
+        dataItem.key?.let { db.child("announcements").child(it).child("enrollments").child(user.displayName).setValue(true) }
     }
 
     companion object{
         private const val TAG = "AnnouncementScroll"
     }
 
+   private fun handleFab() {
+       val announcement = dataItem.announcements
+       val data = "Description: " + announcement.description + " Location: " + announcement.location + " Time: "+ announcement.dateTime
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, data)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
 
-//    override fun onClick(view: View?) {
-//        val sendIntent: Intent = Intent().apply {
-//            action = Intent.ACTION_SEND
-//            putExtra(Intent.EXTRA_TEXT, url)
-//            type = "text/plain"
-//        }
-//
-//        val shareIntent = Intent.createChooser(sendIntent, null)
-//        startActivity(shareIntent)
-//    }
+    fun convertToDate(millis: Long): String? {
+        val simple: DateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z")
+        val result = Date(millis)
+        return simple.format(result)
+    }
 }
