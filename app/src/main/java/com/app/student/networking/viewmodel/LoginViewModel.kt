@@ -2,24 +2,23 @@ package com.app.student.networking.viewmodel
 
 import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import com.app.student.networking.fragments.model.Chat
+import com.app.student.networking.MainActivity
 import com.app.student.networking.model.User
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
-
 
 class LoginViewModel : ViewModel() {
     var response : MutableLiveData<Boolean> = MutableLiveData()
+    var db = Firebase.database.reference
+    var user = FirebaseAuth.getInstance().currentUser
 
     enum class AuthenticationState {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
@@ -33,45 +32,33 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun fetchToken(){
-        FirebaseMessaging.getInstance().token
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    var token = task.result
-                    Log.d("FirebaseMessaging", "Firebase Token: $token")
-                    if (token != null) {
-                        checkIfUserExists(token)
-                    }
-                }
-            })
-    }
-
-    fun checkIfUserExists(token:String){
+    fun checkIfUserExists(){
         val fbUser = FirebaseAuth.getInstance().currentUser
         val db = Firebase.database.reference
 
         db.child("users").child(fbUser.uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (!dataSnapshot.exists()) {
-                    updateUserOnServer(token)
-                } else {
-                    updateTokenOnServer(token)
+                    updateUserOnUsers()
+                    updateUserOnServer()
+                } else{
+                    response.postValue(true)
                 }
             }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
+            override fun onCancelled(databaseError: DatabaseError) {
+                response.postValue(false)
+            }
         })
-
     }
 
-    fun updateUserOnServer(token: String){
+    fun updateUserOnServer(){
         val fbUser = FirebaseAuth.getInstance().currentUser
         val db = Firebase.database.reference
         var url : String=""
         if(fbUser.photoUrl != null) {
             url = fbUser.photoUrl.toString()
         }
-        var user = User(fbUser.displayName, fbUser.email, url, fbUser.phoneNumber, token)
+        var user = User(fbUser.displayName, fbUser.email, url, fbUser.phoneNumber)
         db.child("users").child(fbUser.uid).setValue(user)
         db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -85,8 +72,24 @@ class LoginViewModel : ViewModel() {
         })
     }
 
-    fun updateTokenOnServer(token: String){
-        response.postValue(true)
+    fun updateUserOnUsers(){
+        val fbUser = FirebaseAuth.getInstance().currentUser
+        val db = Firebase.database.reference
+
+        var refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(fbUser.uid)
+
+        val userHashMap = HashMap<String, Any>()
+        userHashMap["uid"] = fbUser.uid
+        userHashMap["username"] = fbUser.displayName
+        userHashMap["profile"] =fbUser.photoUrl.toString()
+        userHashMap["cover"] = "https://firebasestorage.googleapis.com/v0/b/whatsappchatapp-2f6ba.appspot.com/o/option1.jpg?alt=media&token=f955c974-872a-49f9-9656-0e0dddf20f19"
+        userHashMap["status"] = "offline"
+        userHashMap["search"] = fbUser.displayName.toLowerCase()
+        userHashMap["facebook"] = "https://m.facebook.com"
+        userHashMap["instagram"] = "https://m.instagram.com"
+        userHashMap["website"] = "https://www.google.com"
+        refUsers.updateChildren(userHashMap)
+
     }
 
     fun getUserInfo(): String {

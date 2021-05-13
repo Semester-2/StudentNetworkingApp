@@ -5,20 +5,33 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.student.networking.model.AnnoucementData
 import com.app.student.networking.model.ResponseData
-import com.app.student.networking.model.User
+import com.app.student.networking.notification.Token
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 
 class DashboardViewModel : ViewModel() {
 
     var announcementLiveData: MutableLiveData<List<ResponseData>> = MutableLiveData()
+    var user = FirebaseAuth.getInstance().currentUser
 
     init{
         fetchAnnouncementsFromDb()
+        fetchToken()
+    }
+    fun fetchToken(){
+        FirebaseMessaging.getInstance().token
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        var token = task.result
+                        Log.d("FirebaseMessaging", "Firebase Token: $token")
+                        if (token != null) {
+                            var t = Token(token!!)
+                            FirebaseDatabase.getInstance().reference.child("Tokens").child(user.uid).setValue(t)
+                        }
+                    }
+                })
     }
 
     private fun fetchAnnouncementsFromDb() {

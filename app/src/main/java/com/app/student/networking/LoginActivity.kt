@@ -33,8 +33,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
             when(authenticationState){
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     Log.d(TAG, "AUTHENTICATED")
-                    loginViewModel.fetchToken()
-
+                    loginViewModel.checkIfUserExists()
                 }
                 else -> {
                     Log.d(TAG, "UNAUTHENTICATED")
@@ -45,7 +44,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         loginViewModel.response.observe(this, Observer { response ->
             if(response){
                 val intent = Intent(this, MainActivity::class.java )
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and  Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or  Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
             }
