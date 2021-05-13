@@ -13,35 +13,35 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_main"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
-            app:popupTheme="@style/Theme.AppCompat.NoActionBar">
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar_main"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:background="@color/colorPrimaryDark"-->
+<!--            app:popupTheme="@style/Theme.AppCompat.NoActionBar">-->
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/profile"
-                android:tint="@color/white">
+<!--            <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                android:id="@+id/profile_image"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:src="@drawable/profile"-->
+<!--                android:tint="@color/white">-->
 
-            </de.hdodenhof.circleimageview.CircleImageView>
+<!--            </de.hdodenhof.circleimageview.CircleImageView>-->
 
-            <TextView
-                android:id="@+id/username_main"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="26dp"
-                android:text="username"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginStart="26dp">
+<!--            <TextView-->
+<!--                android:id="@+id/username_main"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="26dp"-->
+<!--                android:text="username"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginStart="26dp">-->
 
-            </TextView>
-        </androidx.appcompat.widget.Toolbar>
+<!--            </TextView>-->
+<!--        </androidx.appcompat.widget.Toolbar>-->
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
