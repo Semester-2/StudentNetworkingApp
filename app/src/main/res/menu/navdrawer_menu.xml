@@ -5,11 +5,7 @@
     <item
         android:id="@+id/postFragment"
         android:title="@string/post_events" />
-    <item android:title="@string/academics" />
-    <item android:title="@string/extracurricular" />
     <item
         android:id="@+id/enrollmentFragment"
         android:title="@string/your_enrollments" />
-    <item android:title="@string/contacts" />
-    <item android:title="Chat" />
 </menu>

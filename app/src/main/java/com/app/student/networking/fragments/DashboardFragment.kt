@@ -24,7 +24,7 @@ class DashboardFragment : Fragment() {
     lateinit var binding : FragmentDashboardBinding
     lateinit var viewModel : DashboardViewModel
     lateinit var adapter : AnnouncementListAdapter
-    var newsAlertDialog = MyAlertDialog()
+    //var newsAlertDialog = MyAlertDialog()
 
     companion object{
         const val TAG : String = "TopHeadlinesFragment"
@@ -43,11 +43,11 @@ class DashboardFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
-        activity?.let { newsAlertDialog.showAlertDialog(
-            activity as AppCompatActivity,
-            "fetching Announcements",
-            "Loading... Please wait"
-        ) }
+//        activity?.let { newsAlertDialog.showAlertDialog(
+//            activity as AppCompatActivity,
+//            "fetching Announcements",
+//            "Loading... Please wait"
+//        ) }
 
         //viewModel.fetchToken()
         adapter = AnnouncementListAdapter()
@@ -57,7 +57,7 @@ class DashboardFragment : Fragment() {
 
         viewModel.announcementLiveData.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, "Headlines Count: $it")
-            newsAlertDialog.dismissAlertDialog()
+           // newsAlertDialog.dismissAlertDialog()
             adapter.updateList(it)
             adapter.notifyDataSetChanged()
         })

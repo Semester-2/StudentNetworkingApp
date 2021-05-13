@@ -27,7 +27,7 @@ class EnrollmentFragment : Fragment(), MyCallback {
     lateinit var binding : FragmentDashboardBinding
     lateinit var viewModel : EnrollmentViewModel
     lateinit var adapter : EnrollmentAdapter
-    var newsAlertDialog = MyAlertDialog()
+   // var newsAlertDialog = MyAlertDialog()
 
     companion object{
         const val TAG : String = "EnrollmentFragment"
@@ -45,11 +45,11 @@ class EnrollmentFragment : Fragment(), MyCallback {
         binding.emptyListTV.visibility = View.GONE
         viewModel = ViewModelProvider(this).get(EnrollmentViewModel::class.java)
 
-        activity?.let { newsAlertDialog.showAlertDialog(
-            activity as AppCompatActivity,
-            "Your Enrollments",
-            "Loading... Please wait"
-        ) }
+//        activity?.let { newsAlertDialog.showAlertDialog(
+//            activity as AppCompatActivity,
+//            "Your Enrollments",
+//            "Loading... Please wait"
+//        ) }
 
         adapter = EnrollmentAdapter(this)
         val recyclerView: RecyclerView = binding.annoucementRV
@@ -58,7 +58,7 @@ class EnrollmentFragment : Fragment(), MyCallback {
 
         viewModel.enrollmentLiveData.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, "Headlines Count: $it")
-            newsAlertDialog.dismissAlertDialog()
+           // newsAlertDialog.dismissAlertDialog()
             if(it != null && it[0].announcements.enrollments != null) {
                 binding.emptyListTV.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE

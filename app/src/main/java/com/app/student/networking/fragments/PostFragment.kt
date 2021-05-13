@@ -29,7 +29,7 @@ class PostFragment : Fragment(), View.OnClickListener {
 
     lateinit var binding: FragmentPostBinding
     lateinit var viewModel : PostViewModel
-    var alertDialog = MyAlertDialog()
+    //var alertDialog = MyAlertDialog()
     lateinit var calendar : Calendar
     lateinit var myImage: ImageView
 
@@ -47,7 +47,7 @@ class PostFragment : Fragment(), View.OnClickListener {
         myImage.setOnClickListener{changeImage()}
 
         viewModel.response.observe(viewLifecycleOwner, Observer {
-            alertDialog.dismissAlertDialog()
+           // alertDialog.dismissAlertDialog()
             binding.titleEt.text.clear()
             binding.despET.text.clear()
             binding.dateTimeET.text.clear()
@@ -65,7 +65,7 @@ class PostFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         if (view != null) {
             hideKeybaord(view)
-            alertDialog.showAlertDialog(requireActivity(), "Posting Announcement", "Please wait...")
+           // alertDialog.showAlertDialog(requireActivity(), "Posting Announcement", "Please wait...")
             var user = FirebaseAuth.getInstance().currentUser
             val title = binding.titleEt.text.toString()
             val desc = binding.despET.text.toString()
