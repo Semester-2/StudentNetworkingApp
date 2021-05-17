@@ -5,12 +5,28 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     app:cardBackgroundColor="@color/colorPrimary"
-    android:layout_margin="10dp">
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/dateAnnTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="March 23"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/headingIV"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/headingTV"
@@ -20,7 +36,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:maxLines="3"
-            android:text="here goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headl"
+            android:text="here goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlhere goes the headlere goes the headl"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/headingIV"

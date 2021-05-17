@@ -24,5 +24,15 @@
     <string name="enter_password">Enter Password</string>
     <string name="enter_username">Enter Username</string>
     <string name="published_by">Published By:</string>
+    <string name="category">Category</string>
+
+    <string-array name="Categories">
+        <item>ACADEMICS</item>
+        <item>CAREER</item>
+        <item>FUN ACTIVITY</item>
+        <item>GROUP</item>
+        <item>INTERNATIONAL STUDENT</item>
+        <item>SPORTS</item>
+    </string-array>
 
 </resources>
