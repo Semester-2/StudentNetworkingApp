@@ -74,7 +74,6 @@ class ChatMainActivity: AppCompatActivity() {
             }
         })
 
-       // Display the username and profile picture
         refUsers!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {

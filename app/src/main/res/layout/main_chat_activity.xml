@@ -41,6 +41,7 @@
                 android:layout_marginStart="26dp">
 
             </TextView>
+
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
