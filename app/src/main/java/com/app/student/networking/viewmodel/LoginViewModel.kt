@@ -39,7 +39,7 @@ class LoginViewModel : ViewModel() {
         db.child("users").child(fbUser.uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (!dataSnapshot.exists()) {
-                    //updateUserOnUsers()
+                    updateUserOnUsers()
                     updateUserOnServer()
                 } else{
                     response.postValue(true)
@@ -75,13 +75,16 @@ class LoginViewModel : ViewModel() {
     fun updateUserOnUsers(){
         val fbUser = FirebaseAuth.getInstance().currentUser
         val db = Firebase.database.reference
-
+        var url : String=""
+        if(fbUser.photoUrl != null) {
+            url = fbUser.photoUrl.toString()
+        }
         var refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(fbUser.uid)
 
         val userHashMap = HashMap<String, Any>()
         userHashMap["uid"] = fbUser.uid
         userHashMap["username"] = fbUser.displayName
-        userHashMap["profile"] =fbUser.photoUrl.toString()
+        userHashMap["profile"] =url
         userHashMap["cover"] = "https://firebasestorage.googleapis.com/v0/b/studentnetworking-1edd4.appspot.com/o/sjsu.jpeg?alt=media&token=5a003946-a0e4-4c88-bb8d-9b30eb1f3c94"
         userHashMap["status"] = "offline"
         userHashMap["search"] = fbUser.displayName.toLowerCase()
