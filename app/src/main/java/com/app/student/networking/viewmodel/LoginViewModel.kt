@@ -82,7 +82,7 @@ class LoginViewModel : ViewModel() {
         userHashMap["uid"] = fbUser.uid
         userHashMap["username"] = fbUser.displayName
         userHashMap["profile"] =fbUser.photoUrl.toString()
-        userHashMap["cover"] = "https://firebasestorage.googleapis.com/v0/b/whatsappchatapp-2f6ba.appspot.com/o/option1.jpg?alt=media&token=f955c974-872a-49f9-9656-0e0dddf20f19"
+        userHashMap["cover"] = "https://firebasestorage.googleapis.com/v0/b/studentnetworking-1edd4.appspot.com/o/sjsu.jpeg?alt=media&token=5a003946-a0e4-4c88-bb8d-9b30eb1f3c94"
         userHashMap["status"] = "offline"
         userHashMap["search"] = fbUser.displayName.toLowerCase()
         userHashMap["facebook"] = "https://m.facebook.com"
