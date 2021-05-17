@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -14,13 +13,10 @@ import com.app.student.networking.fragments.ChatsFragment
 import com.app.student.networking.fragments.SearchFragment
 import com.app.student.networking.fragments.SettingsFragment
 import com.app.student.networking.fragments.model.Chat
-import com.app.student.networking.fragments.model.Users
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.main_chat_activity.*
 
 class ChatMainActivity: AppCompatActivity() {
     var refUsers: DatabaseReference? = null
