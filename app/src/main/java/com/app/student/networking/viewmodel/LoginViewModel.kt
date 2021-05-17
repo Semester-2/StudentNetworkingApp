@@ -39,7 +39,7 @@ class LoginViewModel : ViewModel() {
         db.child("users").child(fbUser.uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (!dataSnapshot.exists()) {
-                    updateUserOnUsers()
+                    //updateUserOnUsers()
                     updateUserOnServer()
                 } else{
                     response.postValue(true)
