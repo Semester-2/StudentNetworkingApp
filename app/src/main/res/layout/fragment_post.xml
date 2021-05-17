@@ -53,6 +53,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -62,6 +63,7 @@
                     android:layout_marginStart="20dp"
                     android:text="@string/dateTime"
                     android:textSize="18sp"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintBaseline_toBaselineOf="@+id/dateTimeET"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -75,20 +77,35 @@
                     android:text="@string/location"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/category"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="40dp"
                     android:text="@string/description"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
                 <EditText
                     android:id="@+id/dateTimeET"
@@ -100,6 +117,7 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toEndOf="@+id/textView6"
                     app:layout_constraintTop_toBottomOf="@+id/titleEt" />
 
@@ -112,6 +130,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
+                    android:textColor="@color/black"
                     app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -120,12 +139,13 @@
                 <EditText
                     android:id="@+id/despET"
                     android:layout_width="0dp"
-                    android:layout_height="120dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
+                    android:textColor="@color/black"
                     app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView6" />
@@ -147,6 +167,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
+                    android:textColor="@color/black"
                     app:layout_constraintBaseline_toBaselineOf="@+id/textView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView6" />
@@ -165,6 +186,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/despET"
                     app:srcCompat="@drawable/imageupload"
                     tools:srcCompat="@drawable/imageupload" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView6"
+                    app:layout_constraintTop_toBottomOf="@+id/locationET" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

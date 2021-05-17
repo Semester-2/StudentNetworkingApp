@@ -18,6 +18,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.io.Serializable
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AnnouncementListAdapter  :
     RecyclerView.Adapter<AnnouncementListAdapter.CardHolder>(){
@@ -28,10 +32,12 @@ class AnnouncementListAdapter  :
         val newsText : TextView = view.findViewById(R.id.headingTV)
         private val newsImage : ImageView = view.findViewById(R.id.headingIV)
         private val card : CardView = view.findViewById(R.id.card)
+        private val date : TextView = view.findViewById(R.id.dateAnnTV)
         val context = view.context
         fun bind(oneItem: ResponseData) {
             var list = oneItem.announcements
             newsText.text = list.topic
+            date.text = list.dateTime?.let { convertToDate(it) }
             val url = list.image
 
             Glide
@@ -48,6 +54,12 @@ class AnnouncementListAdapter  :
                 }
                 context.startActivity(intent)
             }
+        }
+
+        fun convertToDate(millis: Long): String? {
+            val simple: DateFormat = SimpleDateFormat("dd MMM yyyy")
+            val result = Date(millis)
+            return simple.format(result)
         }
     }
 

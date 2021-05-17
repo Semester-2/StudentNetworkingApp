@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -18,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.student.networking.R
 import com.app.student.networking.databinding.FragmentPostBinding
 import com.app.student.networking.model.AnnoucementData
-import com.app.student.networking.utility.MyAlertDialog
 import com.app.student.networking.viewmodel.PostViewModel
 import com.google.firebase.auth.FirebaseAuth
 import java.io.File
@@ -46,8 +47,29 @@ class PostFragment : Fragment(), View.OnClickListener {
         myImage = binding.uploadImage
         myImage.setOnClickListener{changeImage()}
 
+        val categories = resources.getStringArray(R.array.Categories)
+        val adapter = activity?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_spinner_item, categories
+            )
+        }
+        binding.spinner.adapter = adapter
+
+        binding.spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
+
         viewModel.response.observe(viewLifecycleOwner, Observer {
-           // alertDialog.dismissAlertDialog()
+            // alertDialog.dismissAlertDialog()
             binding.titleEt.text.clear()
             binding.despET.text.clear()
             binding.dateTimeET.text.clear()
@@ -71,14 +93,16 @@ class PostFragment : Fragment(), View.OnClickListener {
             val desc = binding.despET.text.toString()
             val dateTime = binding.dateTimeET.text.toString()
             val location = binding.locationET.text.toString()
+            val category = binding.spinner.selectedItem.toString()
             val url = "https://firebasestorage.googleapis.com/v0/b/studentnetworking-1edd4.appspot.com/o/btf_detail.jpg?alt=media&token=4dd8439d-e4ea-4606-8e39-ebc15af49a47"
             val data = AnnoucementData(
-                    title,
-                    desc,
-                    viewModel.time,
-                    viewModel.uri.toString(),
-                    location,
-                    user.displayName
+                title,
+                desc,
+                viewModel.time,
+                viewModel.uri.toString(),
+                location,
+                user.displayName,
+                category
             )
             viewModel.postAnnouncement(data)
         }
@@ -95,7 +119,7 @@ class PostFragment : Fragment(), View.OnClickListener {
         val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
         val month: Int = calendar.get(Calendar.MONTH)
         val year: Int = calendar.get(Calendar.YEAR)
-
+        val minDate = calendar.timeInMillis
         val picker = DatePickerDialog(
             requireActivity(),
             { view, year, month, dayOfMonth ->
@@ -105,6 +129,7 @@ class PostFragment : Fragment(), View.OnClickListener {
                 viewModel.time = millis
             }, year, month, day
         )
+        picker.getDatePicker().setMinDate(minDate);
         picker.show()
     }
 
@@ -129,7 +154,7 @@ class PostFragment : Fragment(), View.OnClickListener {
 
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_REQUEST_CODE) {
             myImage.setImageURI(data?.data)
-            viewModel.uploadImageOnStorage(myImage,name)
+            viewModel.uploadImageOnStorage(myImage, name)
         }
     }
 }

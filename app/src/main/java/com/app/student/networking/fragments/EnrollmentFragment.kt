@@ -14,13 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.student.networking.MyCallback
 import com.app.student.networking.R
-import com.app.student.networking.adapter.AnnouncementListAdapter
 import com.app.student.networking.adapter.EnrollmentAdapter
 import com.app.student.networking.databinding.FragmentDashboardBinding
-import com.app.student.networking.utility.MyAlertDialog
-import com.app.student.networking.viewmodel.DashboardViewModel
 import com.app.student.networking.viewmodel.EnrollmentViewModel
-import com.google.firebase.auth.FirebaseAuth
 
 class EnrollmentFragment : Fragment(), MyCallback {
 
