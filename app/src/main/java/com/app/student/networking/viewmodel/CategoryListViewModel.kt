@@ -11,30 +11,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 
-class DashboardViewModel : ViewModel() {
+class CategoryListViewModel : ViewModel() {
 
     var announcementLiveData: MutableLiveData<List<ResponseData>> = MutableLiveData()
     var user = FirebaseAuth.getInstance().currentUser
 
-    init{
-        fetchAnnouncementsFromDb()
-        fetchToken()
-    }
-    fun fetchToken(){
-        FirebaseMessaging.getInstance().token
-                .addOnCompleteListener(OnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        var token = task.result
-                        Log.d("FirebaseMessaging", "Firebase Token: $token")
-                        if (token != null) {
-                            var t = Token(token!!)
-                            FirebaseDatabase.getInstance().reference.child("Tokens").child(user.uid).setValue(t)
-                        }
-                    }
-                })
-    }
 
-    private fun fetchAnnouncementsFromDb() {
+     fun fetchAnnouncementsFromDb(category : String) {
         val db = FirebaseDatabase.getInstance()
         val ref = db.getReference("/announcements")
 
@@ -47,7 +30,7 @@ class DashboardViewModel : ViewModel() {
                 for (valueRes in dataSnapshot.children) {
                     val key = valueRes.key
                     val data = valueRes.getValue(AnnoucementData::class.java)
-                    if (key != null && data != null) {
+                    if (key != null && data != null && data.category == category) {
                         list.add(ResponseData(key,data))
                     }
                 }

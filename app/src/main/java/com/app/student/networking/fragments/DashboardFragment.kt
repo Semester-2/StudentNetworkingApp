@@ -15,14 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.student.networking.adapter.AnnouncementListAdapter
 import com.app.student.networking.R
 import com.app.student.networking.databinding.FragmentDashboardBinding
-import com.app.student.networking.utility.MyAlertDialog
-import com.app.student.networking.viewmodel.DashboardViewModel
+import com.app.student.networking.model.CategoryGridData
+import com.app.student.networking.viewmodel.CategoryListViewModel
 import com.google.firebase.auth.FirebaseAuth
 
-class DashboardFragment : Fragment() {
+class DashboardFragment(var category : CategoryGridData) : Fragment() {
 
     lateinit var binding : FragmentDashboardBinding
-    lateinit var viewModel : DashboardViewModel
+    lateinit var viewModel : CategoryListViewModel
     lateinit var adapter : AnnouncementListAdapter
     //var newsAlertDialog = MyAlertDialog()
 
@@ -41,7 +41,7 @@ class DashboardFragment : Fragment() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Dashboard"
 
-        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CategoryListViewModel::class.java)
 
 //        activity?.let { newsAlertDialog.showAlertDialog(
 //            activity as AppCompatActivity,

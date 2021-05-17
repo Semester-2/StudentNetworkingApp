@@ -39,7 +39,7 @@ class EnrollmentAdapter(var listener : MyCallback) : RecyclerView.Adapter<Enroll
             locText.text = list.location
         }
         fun convertToDate(millis: Long): String? {
-            val simple: DateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z")
+            val simple: DateFormat = SimpleDateFormat("dd MMM yyyy")
             val result = Date(millis)
             return simple.format(result)
         }

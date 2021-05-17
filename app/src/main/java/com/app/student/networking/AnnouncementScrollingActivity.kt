@@ -35,8 +35,10 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
         val descriptionTV = findViewById<TextView>(R.id.descriptionTV)
         val locationTV = findViewById<TextView>(R.id.locationTV)
         val publishedByTV = findViewById<TextView>(R.id.publishedBYTV)
+        val chatBtn = findViewById<ImageView>(R.id.chatImageBtn)
         registerBtn = findViewById<Button>(R.id.registerBtn)
         registerBtn.setOnClickListener { registerForEvent() }
+        chatBtn.setOnClickListener{launchChat()}
 
         val collapsingImageView = findViewById<ImageView>(R.id.collapsingToolbarHeaderImage)
         val fab = findViewById<FloatingActionButton>(R.id.fab)
@@ -72,11 +74,16 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
                     .load(url)
                     .centerCrop()
                     .into(collapsingImageView);
-            toolbarLayout.title = "News Detail"
+            toolbarLayout.title = list.category
         }
 
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    fun launchChat(){
+        val intent = Intent(this, ChatMainActivity::class.java)
+        startActivity(intent)
     }
 
     fun registerForEvent() {
@@ -127,7 +134,7 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
     }
 
     fun convertToDate(millis: Long): String? {
-        val simple: DateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z")
+        val simple: DateFormat = SimpleDateFormat("dd MMM yyyy")
         val result = Date(millis)
         return simple.format(result)
     }

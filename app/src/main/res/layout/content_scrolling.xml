@@ -13,6 +13,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/chatImageBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="40dp"
+                app:srcCompat="@android:drawable/sym_action_chat"
+                app:tint="#FDBF5C" />
+            <Button
+                android:id="@+id/registerBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/titleTV"
             android:layout_width="0dp"
@@ -23,6 +46,7 @@
             android:text="This is the title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -35,6 +59,7 @@
             android:text="This is the author"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView4"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/titleTV" />
 
         <TextView
@@ -47,6 +72,7 @@
             android:text="2021-04-20T19:00:00Z"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView5"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/dateTimeTV" />
 
         <TextView
@@ -60,6 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView8"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/locationTV" />
 
         <TextView
@@ -70,6 +97,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/dateTime"
             app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/titleTV" />
 
         <TextView
@@ -80,6 +108,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/location"
             app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/dateTimeTV" />
 
         <TextView
@@ -90,6 +119,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/published_by"
             app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
@@ -102,21 +132,10 @@
             android:text="This is the detail description of the news"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-        <Button
-            android:id="@+id/registerBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/register"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
-
-<!--        <ImageView-->
+        <!--        <ImageView-->
 <!--            android:id="@+id/callIV"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->

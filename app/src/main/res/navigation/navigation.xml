@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/dashboardFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/categoryDashboardFragment">
 
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.app.student.networking.fragments.DashboardFragment"
-        android:label="DashboardFragment" />
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_dashboard"/>
     <fragment
         android:id="@+id/postFragment"
         android:name="com.app.student.networking.fragments.PostFragment"
@@ -19,4 +22,21 @@
         android:id="@+id/enrollmentFragment"
         android:name="com.app.student.networking.fragments.EnrollmentFragment"
         android:label="EnrollmentFragment" />
+    <fragment
+        android:id="@+id/categoryDashboardFragment"
+        android:name="com.app.student.networking.fragments.CategoryDashboardFragment"
+        android:label="CategoryDashboardFragment" >
+        <action
+            android:id="@+id/action_categoryDashboardFragment_to_categoryListActivity"
+            app:destination="@id/categoryListActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/categoryListActivity"
+        android:name="com.app.student.networking.CategoryListActivity"
+        android:label="CategoryListActivity" >
+        <argument
+            android:name="categorySelected"
+            app:argType="string"
+            android:defaultValue="ACADEMICS" />
+    </activity>
 </navigation>
