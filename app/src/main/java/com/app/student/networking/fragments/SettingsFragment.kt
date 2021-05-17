@@ -109,11 +109,11 @@ class SettingsFragment : Fragment() {
     {
 
         val builder: AlertDialog.Builder =
-            AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert)
+            AlertDialog.Builder(context, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
 
         if (socialChecker == "website")
         {
-            builder.setTitle("Enter the URL:")
+            builder.setTitle("Enter your LinkedIn username:")
 
         }else
         {
@@ -124,7 +124,7 @@ class SettingsFragment : Fragment() {
 
         if (socialChecker == "website")
         {
-            editText.hint = "e.g. www.anukurudi.com"
+            editText.hint = "e.g. anupamakn"
 
         }else
         {
@@ -177,7 +177,7 @@ class SettingsFragment : Fragment() {
 
             "website" ->
             {
-                mapSocial["website"] = "https://$str"
+                mapSocial["website"] = "https://www.linkedin.com/in/$str"
             }
         }
         usersReference!!.updateChildren(mapSocial).addOnCompleteListener{
