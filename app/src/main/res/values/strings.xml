@@ -3,7 +3,7 @@
     <string name="login_text">Connect anytime anywhere</string>
     <string name="welcome_user">Welcome %1$s</string>
     <string name="post_events">Post Events</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="sign_out">Logout</string>
     <string name="sign_in">Sign In With Google</string>
     <string name="title_activity_announcement_scrolling">ScrollingActivity</string>
     <string name="action_settings">Settings</string>

@@ -70,6 +70,7 @@ class PostFragment : Fragment(), View.OnClickListener {
 
         viewModel.response.observe(viewLifecycleOwner, Observer {
             // alertDialog.dismissAlertDialog()
+            Toast.makeText(activity,"Event posted Successfully",Toast.LENGTH_LONG).show()
             binding.titleEt.text.clear()
             binding.despET.text.clear()
             binding.dateTimeET.text.clear()
