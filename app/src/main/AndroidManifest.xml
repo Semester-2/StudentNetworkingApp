@@ -35,8 +35,12 @@
         <activity
             android:name=".ChatMainActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".MessageChatActivity" />
+
+        <activity android:name=".MessageChatActivity"
+            android:parentActivityName=".ChatMainActivity" />
+
         <activity android:name=".WelcomeActivity" />
+
         <activity
             android:name=".CategoryListActivity"
             android:parentActivityName=".MainActivity" />

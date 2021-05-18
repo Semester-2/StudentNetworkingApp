@@ -104,9 +104,12 @@ class ChatsFragment : Fragment() {
 
                 }
 
-                userAdapter = UserAdapter(context!!, (mUsers as ArrayList), true)
+                if(mUsers != null && (mUsers as ArrayList<Users>).size != 0){
 
-                recycler_view_chatlist.adapter = userAdapter
+                    userAdapter = UserAdapter(context!!, (mUsers as ArrayList), true)
+
+                    recycler_view_chatlist.adapter = userAdapter
+                }
             }
 
             override fun onCancelled(p0: DatabaseError)
