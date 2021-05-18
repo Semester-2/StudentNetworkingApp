@@ -82,9 +82,26 @@ class ChatMainActivity: AppCompatActivity() {
                     val user: Users? = snapshot.getValue(Users::class.java)
 
                     username_main.text = user!!.getUserName()
-                    Picasso.get().load(user.getProfile())
-                        .placeholder(R.drawable.profile)
-                        .into(profile_image)
+
+                    //Picasso.get().load(new File(imageStringUrl))
+                    //.into(iview);
+
+                    //if (image.isEmpty()) {
+                    //   iview.setImageResource(R.drawable.placeholder);
+                    //} else{
+                    //    Picasso.get().load(image).into(iview);
+                    //  }
+
+                    if ((user.getProfile()!!).trim().isEmpty())
+                    {
+                        Picasso.get().load(R.drawable.profile)
+                                .into(profile_image)
+                    }
+                    else{
+
+                        Picasso.get().load(user.getProfile())
+                                .into(profile_image)
+                    }
 
                 }
             }
