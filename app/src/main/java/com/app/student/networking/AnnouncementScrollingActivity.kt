@@ -123,7 +123,11 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
 
    private fun handleFab() {
        val announcement = dataItem.announcements
-       val data = "Description: " + announcement.description + " Location: " + announcement.location + " Time: "+ announcement.dateTime
+       val data = "Description: " + announcement.description + " Location: " + announcement.location + " Time: "+ announcement.dateTime?.let {
+           convertToDate(
+               it
+           )
+       }
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, data)
