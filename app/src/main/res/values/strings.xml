@@ -12,19 +12,20 @@
     <string name="dateTime">Date Time :</string>
     <string name="duration">Duration :</string>
     <string name="location">Location :</string>
-    <string name="register">Register</string>
+    <string name="register">I am Interested</string>
     <string name="post">POST</string>
     <string name="extracurricular">Extracurricular</string>
     <string name="academics">Academics</string>
     <string name="contacts">Contacts</string>
     <string name="your_enrollments">Your Enrollments</string>
-    <string name="unregister">UNREGISTER</string>
+    <string name="unregister">Not Interested</string>
     <string name="no_enrollments">You have no enrollments</string>
     <string name="enter_email">Enter Email Address</string>
     <string name="enter_password">Enter Password</string>
     <string name="enter_username">Enter Username</string>
     <string name="published_by">Published By:</string>
     <string name="category">Category</string>
+    <string name="empty_list">No Announcement Posted</string>
 
     <string-array name="Categories">
         <item>ACADEMICS</item>

@@ -90,10 +90,10 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
         val db = Firebase.database.reference
         val user = FirebaseAuth.getInstance().currentUser
         lateinit var task: Task<Void>
-        if (registerBtn.text == "Register") {
+        if (registerBtn.text == getString(R.string.register)) {
             task = db.child("users").child(user.uid).child("activities").child(key).setValue(true)
             task.addOnSuccessListener {
-                registerBtn.text = "Unregister"
+                registerBtn.text = getString(R.string.unregister)
                 Log.d(TAG, "addOnSuccessListener: $it")
                 announcementRegister()
             }
@@ -101,13 +101,13 @@ class AnnouncementScrollingActivity : AppCompatActivity() {
                 Log.d(TAG, "addOnFailureListener")
             }
 
-        } else if (registerBtn.text == "Unregister") {
+        } else if (registerBtn.text == getString(R.string.unregister)) {
 
             val ref = FirebaseDatabase.getInstance().getReference("users").child(user.uid).child("activities").child(key)
             ref.removeValue()
             val ref1 = FirebaseDatabase.getInstance().getReference("announcements").child(key).child("enrollments").child(user.displayName)
             ref1.removeValue()
-            registerBtn.text = "Register"
+            registerBtn.text = getString(R.string.register)
         }
     }
 

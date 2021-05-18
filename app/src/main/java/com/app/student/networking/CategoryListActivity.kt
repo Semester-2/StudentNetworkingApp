@@ -2,20 +2,17 @@ package com.app.student.networking
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.student.networking.adapter.AnnouncementListAdapter
-import com.app.student.networking.adapter.CATEGORY_SELECTED
 import com.app.student.networking.databinding.FragmentDashboardBinding
 import com.app.student.networking.fragments.DashboardFragment
-import com.app.student.networking.model.Categories
 import com.app.student.networking.viewmodel.CategoryListViewModel
 
 class CategoryListActivity : AppCompatActivity() {
@@ -31,14 +28,9 @@ class CategoryListActivity : AppCompatActivity() {
         supportActionBar!!.title = "Dashboard"
         viewModel = ViewModelProvider(this).get(CategoryListViewModel::class.java)
 
-//        var selectedCategory = savedInstanceState?.getString(CATEGORY_SELECTED)
-//        viewModel.fetchAnnouncementsFromDb(selectedCategory as String)
-
-
             val args: CategoryListActivityArgs by navArgs()
             var categorySelected = args.categorySelected
             viewModel.fetchAnnouncementsFromDb(categorySelected)
-
 
         adapter = AnnouncementListAdapter()
         val recyclerView: RecyclerView = binding.annoucementRV
@@ -47,8 +39,16 @@ class CategoryListActivity : AppCompatActivity() {
 
         viewModel.announcementLiveData.observe(this, Observer {
             Log.d(DashboardFragment.TAG, "Headlines Count: $it")
-            adapter.updateList(it)
-            adapter.notifyDataSetChanged()
+            if(it != null && it.isNotEmpty()) {
+                binding.emptyListTV.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+                adapter.updateList(it)
+                adapter.notifyDataSetChanged()
+            }else{
+                recyclerView.visibility = View.INVISIBLE
+                binding.emptyListTV.text = getString(R.string.empty_list)
+                binding.emptyListTV.visibility = View.VISIBLE
+            }
         })
     }
 }
