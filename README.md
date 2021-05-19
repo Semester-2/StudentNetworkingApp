@@ -10,6 +10,12 @@ Platform : Android
 Language : Kotlin
 Integration : Google Firebase
 
+## Steps to set up this git repository project:
+##### 1. This application is set up using firebase, by creating and registering the application on the platform.
+##### 2. Android Studio IDE, to set up the project and build the gradle files with the dependencies.
+##### 3. Emulators or devices setup with SDK version kitkat and above to run the appplication on it
+##### 4. Login credentials of existing users: emma@sjsu.edu/123456   noah@sjsu.edu/123456
+
 ###  App Design 
 Application is designed by using Kotlin language and uses Material Design as the app theme. Minimum sdk version supported for the app is 23. Application is designed in such a way that it looks and behaves consistently on different resolution devices. All the layouts have been developed using constraint layouts that adjust the UI based on the device resolutions.
 App is designed using jetpack libraries like Data Binding, Live Data, View Model, navigation, etc. that helps in achieving compatibility, performance and security. 
@@ -119,7 +125,7 @@ The sent status is the status denoted on the message and image that is sent by a
 This is an icon on the right side of the profile picture of the users in the Chat list. This is grey in color to indicate the user is offline and green in color to indicate online. Online or offline status value is saved in the status variable on the Firebase database. As soon as the user logs in and enters the chat window the status is updated to online and once they leave it is changed to offline.
 
 #### 20. Number of unread messages 
-	The number of unread messages are shown in the Chats tab, in brackets. Eg. (3) - means 3 unread messages.
+The number of unread messages are shown in the Chats tab, in brackets. Eg. (3) - means 3 unread messages.
 
 #### 21. Message notifications
 The user is notified of the message sent to them by another user as a notification that appears in the notifications drawer on the phone. This is implemented using firebase notifications. This notification contains the sender name and message content. If it is an image, the notification reads “Sent an image”.
@@ -150,9 +156,9 @@ User logs out of the application from
 
 
 ###### Task Distribution
-###### Gunjan : Designed and implemented Events Section, features 1 to 12 listed above.
+##### Gunjan : Designed and implemented Events Section, features 1 to 12 listed above.
 
-###### Anupama : Designed and implemented Chats Section, features 13 to 26 listed above.
+##### Anupama : Designed and implemented Chats Section, features 13 to 26 listed above.
 
 
 
