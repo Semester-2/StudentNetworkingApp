@@ -160,5 +160,8 @@ User logs out of the application from
 
 ##### Anupama : Designed and implemented Chats Section, features 13 to 26 listed above.
 
+##### All the files in this repo has relevant naming, so that the file name represents the feature it implements.
+##### Therefore all the file names having feature names 1 to 12 belong to Gunjan and all the file names having feature names 13 to 26 belongs to Anupama.
+
 
 
